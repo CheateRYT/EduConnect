@@ -23,9 +23,9 @@ export class UserController {
     return this.userService.register(login, password, name, role);
   }
 
-  @Post('update/:id')
+  @Post('update')
   async updateUser(
-    @Param('id') id: number,
+    @Request() req,
     @Body()
     updates: {
       name?: string;
@@ -36,11 +36,19 @@ export class UserController {
     },
     @Body('currentPassword') currentPassword?: string,
   ) {
+    const token = req.headers.authorization?.split(' ')[1]; // Извлекаем токен из заголовка
+    const user = await this.userService.validateToken(token); // Проверяем токен
+
+    if (!user) {
+      throw new UnauthorizedException('Неверный токен');
+    }
+
     const updatedUser = await this.userService.updateUser(
-      id,
+      user.id,
       updates,
       currentPassword,
     );
+
     if (!updatedUser) {
       throw new Error('Не найден пользователь');
     }
