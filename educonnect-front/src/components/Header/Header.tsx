@@ -14,11 +14,11 @@ const Header = () => {
 		if (token) {
 			validateToken(token).then(valid => {
 				if (!valid) {
-					router.push('/login')
+					router.push('/')
 				}
 			})
 		} else {
-			router.push('/login')
+			router.push('/')
 		}
 	}, [])
 

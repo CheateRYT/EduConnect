@@ -19,3 +19,8 @@ body {
 	background: var(--background);
 	font-family: var(--font-default), Arial, Helvetica, sans-serif;
 }
+html,
+body {
+	height: 100%; /* Устанавливаем высоту html и body равной 100% */
+	margin: 0; /* Убираем внешние отступы */
+}

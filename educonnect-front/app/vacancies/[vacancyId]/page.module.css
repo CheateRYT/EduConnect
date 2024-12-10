@@ -1,0 +1,77 @@
+/* styles/VacancyDetails.module.css */
+
+.detailsContainer {
+	max-width: 100%;
+	min-height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: flex-start;
+	padding-top: 50px;
+	background-color: #f7f9fa;
+}
+
+.vacancyWrapper {
+	width: 70%;
+	max-width: 1200px;
+	background-color: white;
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.07);
+	border-radius: 8px;
+	overflow: hidden;
+}
+
+.vacancyHeader {
+	padding: 30px;
+	border-bottom: 1px solid #eaecef;
+}
+
+.vacancyTitle {
+	font-size: 28px;
+	font-weight: 600;
+	margin-bottom: 15px;
+	color: #212529;
+}
+
+.vacancyDescription {
+	font-size: 18px;
+	line-height: 1.6;
+	margin-bottom: 25px;
+	color: #495057;
+}
+
+.vacancyMeta {
+	font-size: 16px;
+	color: #868e96;
+	display: flex;
+	gap: 10px;
+	margin-bottom: 35px;
+}
+
+.vacancyMetaItem {
+	display: inline-block;
+	padding: 5px 10px;
+	background-color: #f1f3f5;
+	border-radius: 4px;
+	font-weight: 400;
+	color: #495057;
+}
+
+.vacancyFooter {
+	padding: 30px;
+	text-align: right;
+	border-top: 1px solid #eaecef;
+}
+
+.chatButton {
+	padding: 10px 20px;
+	background-color: #007bff;
+	color: white;
+	font-size: 16px;
+	font-weight: 500;
+	border-radius: 4px;
+	cursor: pointer;
+	transition: all 0.3s ease-in-out;
+}
+
+.chatButton:hover {
+	background-color: #0056b3;
+}
