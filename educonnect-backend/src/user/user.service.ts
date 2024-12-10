@@ -75,6 +75,7 @@ export class UserService {
     });
     return newUser;
   }
+
   async getUser(id: number) {
     const user = await this.prisma.user.findUnique({
       where: { id },
@@ -90,7 +91,7 @@ export class UserService {
     });
 
     if (!user) {
-      return null; // Если пользователь не найден, возвращаем null
+      return null;
     }
 
     return {
@@ -208,7 +209,14 @@ export class UserService {
 
   async generateToken(user: User): Promise<string> {
     const payload = { id: user.id, name: user.name };
-    return jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1h' });
+    const token = jwt.sign(payload, process.env.JWT_SECRET, {
+      expiresIn: '1h',
+    });
+    await this.prisma.user.update({
+      where: { id: user.id },
+      data: { token },
+    });
+    return token;
   }
 
   async validateToken(token: string): Promise<User | null> {

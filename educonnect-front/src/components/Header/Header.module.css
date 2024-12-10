@@ -1,0 +1,64 @@
+.header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 20px 40px;
+	flex-wrap: wrap;
+	background-color: white; /* Фоновый цвет */
+	color: #9b59b6;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.logo {
+	cursor: pointer;
+	font-size: 2rem;
+	font-weight: bold;
+	font-style: italic;
+}
+
+.logo:hover {
+	transform: scale(1.1); /* Увеличение при наведении */
+}
+
+.nav {
+	display: flex;
+	gap: 20px;
+}
+
+.navLink {
+	color: #9b59b6;
+	text-decoration: none;
+	padding: 10px 15px;
+	font-size: 1.2rem;
+	border-radius: 5px;
+	transition: background-color 0.3s, transform 0.3s;
+}
+
+.navLink:hover {
+	color: white;
+	background-color: #9b59b6; /* Полупрозрачный белый цвет */
+	transform: scale(1.05); /* Увеличение при наведении */
+}
+
+/* Медиа-запросы для мобильных устройств */
+@media (max-width: 768px) {
+	.header {
+		flex-direction: column; /* Вертикальное выравнивание */
+		align-items: flex-start; /* Выравнивание по левому краю */
+		padding: 10px 20px; /* Уменьшаем отступы */
+	}
+
+	.logo {
+		font-size: 1.3rem; /* Уменьшаем размер логотипа */
+		margin-bottom: 10px; /* Отступ под логотипом */
+	}
+
+	.nav {
+		flex-direction: column; /* Вертикальная навигация */
+		gap: 10px; /* Уменьшаем промежутки между ссылками */
+	}
+
+	.navLink {
+		padding: 8px 12px; /* Уменьшаем отступы для ссылок */
+	}
+}
