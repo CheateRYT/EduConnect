@@ -1,0 +1,106 @@
+.container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	min-height: 100vh;
+	background-color: white;
+	color: black;
+	animation: fadeIn 1s ease-in-out;
+}
+
+.header {
+	display: flex;
+	justify-content: space-between;
+	width: 100%;
+	padding: 20px 40px;
+}
+
+.title {
+	font-size: 2.5rem;
+	font-weight: bold;
+	font-style: italic;
+	color: #9b59b6; /* фиолетовый цвет */
+}
+
+.navLink {
+	padding: 10px 20px;
+	color: #9b59b6;
+	transition: background-color 0.3s, color 0.3s;
+}
+
+.navLink:hover {
+	background-color: #9b59b6;
+	color: white;
+}
+
+.main {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin-top: 50px;
+	text-align: center;
+}
+.actions {
+	display: flex;
+	gap: 15px;
+	flex-wrap: wrap;
+}
+.subtitle {
+	font-size: 2rem;
+	font-weight: bold;
+	margin-bottom: 20px;
+	animation: slideIn 0.5s ease-in-out;
+}
+
+.description {
+	font-size: 1.25rem;
+	margin-bottom: 40px;
+	animation: slideIn 0.5s ease-in-out;
+}
+
+.join {
+	font-size: 1.5rem;
+	animation: slideIn 0.5s ease-in-out;
+}
+
+.signupButton {
+	margin-top: 20px;
+	padding: 15px 30px;
+	background-color: #9b59b6;
+	color: white;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	transition: background-color 0.3s;
+}
+
+.signupButton:hover {
+	background-color: #8e44ad;
+}
+
+.footer {
+	margin-top: 40px;
+	font-size: 0.875rem;
+}
+
+/* Анимации */
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
+@keyframes slideIn {
+	from {
+		transform: translateY(20px);
+		opacity: 0;
+	}
+	to {
+		transform: translateY(0);
+		opacity: 1;
+	}
+}

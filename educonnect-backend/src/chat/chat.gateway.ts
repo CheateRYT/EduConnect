@@ -31,7 +31,6 @@ export class ChatGateway implements OnGatewayInit {
   @SubscribeMessage('sendMessage')
   handleMessage(
     @MessageBody() data: { roomId: string; sender: string; message: string },
-    @ConnectedSocket() client: Socket,
   ) {
     this.chatService.addMessage(data.roomId, data.sender, data.message);
     this.server.to(data.roomId).emit('newMessage', data); // Отправляем сообщение только участникам комнаты
