@@ -23,6 +23,30 @@ export class UserController {
     return this.userService.register(login, password, name, role);
   }
 
+  @Post('update/:id')
+  async updateUser(
+    @Param('id') id: number,
+    @Body()
+    updates: {
+      name?: string;
+      login?: string;
+      password?: string;
+      profilePicture?: string;
+      bio?: string;
+    },
+    @Body('currentPassword') currentPassword?: string,
+  ) {
+    const updatedUser = await this.userService.updateUser(
+      id,
+      updates,
+      currentPassword,
+    );
+    if (!updatedUser) {
+      throw new Error('Не найден пользователь');
+    }
+    return { user: updatedUser };
+  }
+
   @Get('/:id')
   async getUser(@Param('id') id: number, @Request() req) {
     const token = req.headers.authorization?.split(' ')[1]; // Извлекаем токен из заголовка

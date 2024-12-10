@@ -129,7 +129,40 @@ export class UserService {
       createdProjects: user.createdProjects,
     }));
   }
+  async updateUser(
+    id: number,
+    updates: {
+      name?: string;
+      login?: string;
+      password?: string;
+      profilePicture?: string;
+      bio?: string;
+    },
+    currentPassword?: string,
+  ): Promise<User | null> {
+    const user = await this.prisma.user.findUnique({ where: { id } });
 
+    if (!user) {
+      return null; // Если пользователь не найден, возвращаем null
+    }
+
+    // Проверка текущего пароля, если он был передан
+    if (updates.password && currentPassword) {
+      const passwordValid = await argon2.verify(user.password, currentPassword);
+      if (!passwordValid) {
+        throw new Error('Неверный текущий пароль');
+      }
+      updates.password = await argon2.hash(updates.password); // Хэшируем новый пароль
+    }
+
+    // Обновляем пользователя
+    const updatedUser = await this.prisma.user.update({
+      where: { id },
+      data: updates,
+    });
+
+    return updatedUser;
+  }
   async findUserByLogin(login: string): Promise<User | null> {
     return this.prisma.user.findUnique({ where: { login: login } });
   }
