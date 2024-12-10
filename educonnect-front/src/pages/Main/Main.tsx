@@ -1,13 +1,14 @@
 'use client'
+import { validateToken } from '@/src/utils/validateToken'
+import Cookies from 'js-cookie'
 import Link from 'next/link'
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import TypeIt from 'typeit'
 import styles from './Main.module.css'
-
 const Main = () => {
 	// Указываем только HTMLSpanElement для рефа
 	const typeItRef = useRef<HTMLSpanElement | null>(null)
-
+	const [isLogin, setIsLogin] = useState<boolean>(false)
 	useEffect(() => {
 		const timer = setTimeout(() => {
 			if (typeItRef.current) {
@@ -33,15 +34,29 @@ const Main = () => {
 
 		return () => clearTimeout(timer) // Очистка таймера при размонтировании
 	}, [])
-
+	useEffect(() => {
+		const token = Cookies.get('token')
+		if (token) {
+			validateToken(token).then(valid => {
+				if (valid) setIsLogin(true)
+			})
+		}
+	}, [])
 	return (
 		<div className={styles.container}>
 			<header className={styles.header}>
 				<h1 className={styles.title}>EduConnect</h1>
 				<nav>
-					<Link href='/login'>
-						<button className={styles.navLink}>Войти</button>
-					</Link>
+					{isLogin && (
+						<Link href='/home'>
+							<button className={styles.navLink}>Главная</button>
+						</Link>
+					)}
+					{!isLogin && (
+						<Link href='/login'>
+							<button className={styles.navLink}>Войти</button>
+						</Link>
+					)}
 				</nav>
 			</header>
 			<main className={styles.main}>
