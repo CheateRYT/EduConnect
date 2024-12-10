@@ -49,7 +49,10 @@ const Main = () => {
 				</div>
 			</main>
 			<footer className={styles.footer}>
-				<p>© 2024 Для хакатона WEB practic. Автор Редников Лев.</p>
+				<p>
+					© 2024 Для хакатона. Лучшее Веб приложение. Кейс WEB practic. Автор
+					Редников Лев. Команда Пчелки
+				</p>
 			</footer>
 		</div>
 	)

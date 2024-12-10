@@ -9,9 +9,13 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^2.4.0",
+    "axios": "^1.7.9",
+    "js-cookies": "^1.0.4",
     "next": "15.0.4",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-redux": "^9.1.2",
     "typeit": "^8.8.7"
   },
   "devDependencies": {
