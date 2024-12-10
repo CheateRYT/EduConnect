@@ -143,10 +143,9 @@ export class UserService {
     const user = await this.prisma.user.findUnique({ where: { id } });
 
     if (!user) {
-      return null; // Если пользователь не найден, возвращаем null
+      return null;
     }
 
-    // Проверка текущего пароля, если он был передан
     if (updates.password && currentPassword) {
       const passwordValid = await argon2.verify(user.password, currentPassword);
       if (!passwordValid) {
