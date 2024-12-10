@@ -1,0 +1,56 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id               Int       @id @default(autoincrement())
+  token            String?
+  role             String    @default("STUDENT")
+  name             String
+  login            String    @unique
+  password         String
+  profilePicture   String?
+  bio              String?
+  courses          Course[]  @relation("UserCourses")
+  projects         Project[] @relation("UserProjects")
+  createdVacancies Vacancy[] @relation("UserVacancies")
+  createdCourses   Course[]  @relation("CourseCreator")
+  createdProjects  Project[] @relation("ProjectCreator")
+}
+
+model Course {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  users       User[]   @relation("UserCourses")
+  creatorId   Int
+  creator     User     @relation("CourseCreator", fields: [creatorId], references: [id])
+}
+
+model Project {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  users       User[]   @relation("UserProjects")
+  creatorId   Int
+  creator     User     @relation("ProjectCreator", fields: [creatorId], references: [id])
+}
+
+model Vacancy {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  employerId  Int
+  employer    User     @relation("UserVacancies", fields: [employerId], references: [id])
+}
