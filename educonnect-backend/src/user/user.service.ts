@@ -216,6 +216,7 @@ export class UserService {
       const decoded: any = jwt.verify(token, process.env.JWT_SECRET);
       return this.prisma.user.findUnique({ where: { id: decoded.id } });
     } catch (error) {
+      console.log(error);
       return null;
     }
   }
