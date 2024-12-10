@@ -39,13 +39,13 @@ export class VacancyController {
         'Недостаточно прав для создания вакансии',
       );
     }
-    return this.vacancyService.createVacancy(user.id, vacancyData);
+    return this.vacancyService.createVacancy(Number(user.id), vacancyData);
   }
 
   // Получение вакансии по ID
   @Get(':id')
   async getVacancy(@Param('id') id: number) {
-    const vacancy = await this.vacancyService.getVacancyById(id);
+    const vacancy = await this.vacancyService.getVacancyById(Number(id));
     if (!vacancy) {
       throw new Error('Вакансия не найдена');
     }
@@ -64,6 +64,6 @@ export class VacancyController {
   // Удаление вакансии
   @Delete(':id')
   async deleteVacancy(@Param('id') id: number) {
-    return this.vacancyService.deleteVacancy(id);
+    return this.vacancyService.deleteVacancy(Number(id));
   }
 }

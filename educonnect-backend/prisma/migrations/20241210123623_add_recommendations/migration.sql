@@ -44,6 +44,19 @@ CREATE TABLE "Vacancy" (
 );
 
 -- CreateTable
+CREATE TABLE "Recommendation" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "title" TEXT NOT NULL,
+    "rating" INTEGER,
+    "description" TEXT,
+    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "giverId" INTEGER NOT NULL,
+    "recipientId" INTEGER NOT NULL,
+    CONSTRAINT "Recommendation_giverId_fkey" FOREIGN KEY ("giverId") REFERENCES "User" ("id") ON DELETE RESTRICT ON UPDATE CASCADE,
+    CONSTRAINT "Recommendation_recipientId_fkey" FOREIGN KEY ("recipientId") REFERENCES "User" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
+);
+
+-- CreateTable
 CREATE TABLE "_UserCourses" (
     "A" INTEGER NOT NULL,
     "B" INTEGER NOT NULL,

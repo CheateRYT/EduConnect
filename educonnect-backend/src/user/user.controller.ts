@@ -22,7 +22,39 @@ export class UserController {
   ) {
     return this.userService.register(login, password, name, role);
   }
+  @Post('recommendation')
+  async createRecommendation(
+    @Request() req,
+    @Body('recipientId') recipientId: number,
+    @Body('title') title: string,
+    @Body('description') description?: string,
+    @Body('rating') rating?: number,
+  ) {
+    const token = req.headers.authorization?.split(' ')[1]; // Извлекаем токен из заголовка
+    const user = await this.userService.validateToken(token); // Проверяем токен
 
+    if (!user) {
+      throw new UnauthorizedException('Неверный токен');
+    }
+
+    // Проверяем, что отправитель имеет роль TEACHER
+    if (user.role !== 'TEACHER') {
+      throw new UnauthorizedException(
+        'У вас нет прав для создания рекомендаций',
+      );
+    }
+
+    // Создаем рекомендацию
+    const recommendation = await this.userService.createRecommendation(
+      Number(user.id),
+      recipientId,
+      title,
+      description,
+      Number(rating),
+    );
+
+    return { recommendation };
+  }
   @Post('update')
   async updateUser(
     @Request() req,

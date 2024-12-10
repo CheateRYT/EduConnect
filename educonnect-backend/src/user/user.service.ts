@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { User } from '@prisma/client';
+import { Recommendation, User } from '@prisma/client';
 import * as argon2 from 'argon2';
 import * as jwt from 'jsonwebtoken';
 import { PrismaService } from 'prisma/prisma.service';
@@ -84,6 +84,8 @@ export class UserService {
         createdVacancies: true, // Включаем созданные вакансии
         createdCourses: true, // Включаем созданные курсы
         createdProjects: true, // Включаем созданные проекты
+        givenRecommendations: true,
+        receivedRecommendations: true,
       },
     });
 
@@ -104,7 +106,35 @@ export class UserService {
       createdProjects: user.createdProjects, // Теперь это поле доступно
     };
   }
+  async createRecommendation(
+    giverId: number,
+    recipientId: number,
+    title: string,
+    description?: string,
+    rating?: number,
+  ): Promise<Recommendation> {
+    // Проверяем, является ли получатель студентом
+    const recipient = await this.prisma.user.findUnique({
+      where: { id: recipientId },
+    });
 
+    if (!recipient || recipient.role !== 'STUDENT') {
+      throw new Error('Получатель должен быть студентом');
+    }
+
+    // Создаем рекомендацию
+    const recommendation = await this.prisma.recommendation.create({
+      data: {
+        title,
+        description,
+        rating,
+        giverId,
+        recipientId,
+      },
+    });
+
+    return recommendation;
+  }
   async getUsers() {
     const users = await this.prisma.user.findMany({
       include: {
@@ -113,6 +143,8 @@ export class UserService {
         createdVacancies: true, // Включаем созданные вакансии
         createdCourses: true, // Включаем созданные курсы
         createdProjects: true, // Включаем созданные проекты
+        givenRecommendations: true,
+        receivedRecommendations: true,
       },
     });
 

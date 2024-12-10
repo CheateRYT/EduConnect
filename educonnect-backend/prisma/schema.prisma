@@ -8,19 +8,21 @@ datasource db {
 }
 
 model User {
-  id               Int       @id @default(autoincrement())
-  token            String?
-  role             String    @default("STUDENT")
-  name             String
-  login            String    @unique
-  password         String
-  profilePicture   String?
-  bio              String?
-  courses          Course[]  @relation("UserCourses")
-  projects         Project[] @relation("UserProjects")
-  createdVacancies Vacancy[] @relation("UserVacancies")
-  createdCourses   Course[]  @relation("CourseCreator")
-  createdProjects  Project[] @relation("ProjectCreator")
+  id                      Int              @id @default(autoincrement())
+  token                   String?
+  role                    String           @default("STUDENT")
+  name                    String
+  login                   String           @unique
+  password                String
+  profilePicture          String?
+  bio                     String?
+  courses                 Course[]         @relation("UserCourses")
+  projects                Project[]        @relation("UserProjects")
+  createdVacancies        Vacancy[]        @relation("UserVacancies")
+  createdCourses          Course[]         @relation("CourseCreator")
+  createdProjects         Project[]        @relation("ProjectCreator")
+  givenRecommendations    Recommendation[] @relation("GiverRecommendations") // Связь с рекомендациями, которые пользователь дал
+  receivedRecommendations Recommendation[] @relation("RecipientRecommendations") // Связь с рекомендациями, которые пользователь получил
 }
 
 model Course {
@@ -53,4 +55,16 @@ model Vacancy {
   updatedAt   DateTime @updatedAt
   employerId  Int
   employer    User     @relation("UserVacancies", fields: [employerId], references: [id])
+}
+
+model Recommendation {
+  id          Int      @id @default(autoincrement())
+  title       String
+  rating      Int?
+  description String?
+  createdAt   DateTime @default(now())
+  giverId     Int // Идентификатор пользователя, который дает рекомендацию
+  giver       User     @relation("GiverRecommendations", fields: [giverId], references: [id]) // Связь с пользователем, который дает рекомендацию
+  recipientId Int // Идентификатор пользователя, который получает рекомендацию
+  recipient   User     @relation("RecipientRecommendations", fields: [recipientId], references: [id]) // Связь с пользователем, который получает рекомендацию
 }

@@ -42,7 +42,7 @@ export class ProjectController {
   // Получение проекта по ID
   @Get(':id')
   async getProject(@Param('id') id: number) {
-    const project = await this.projectService.getProjectById(id);
+    const project = await this.projectService.getProjectById(Number(id));
     if (!project) {
       throw new Error('Проект не найден');
     }
@@ -63,8 +63,8 @@ export class ProjectController {
     }
 
     // Проверяем, является ли пользователь создателем проекта
-    const creatorId = await this.projectService.getProjectCreatorId(id);
-    if (creatorId !== user.id) {
+    const creatorId = await this.projectService.getProjectCreatorId(Number(id));
+    if (Number(creatorId) !== Number(user.id)) {
       throw new UnauthorizedException('Вы не можете обновить этот проект');
     }
 
@@ -81,8 +81,8 @@ export class ProjectController {
     }
 
     // Проверяем, является ли пользователь создателем проекта
-    const creatorId = await this.projectService.getProjectCreatorId(id);
-    if (creatorId !== user.id) {
+    const creatorId = await this.projectService.getProjectCreatorId(Number(id));
+    if (Number(creatorId) !== Number(user.id)) {
       throw new UnauthorizedException('Вы не можете удалить этот проект');
     }
 
