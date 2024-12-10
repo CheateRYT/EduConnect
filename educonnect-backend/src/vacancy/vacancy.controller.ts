@@ -26,22 +26,31 @@ export class VacancyController {
     return this.vacancyService.getVacancies();
   }
 
-  // Создание новой вакансии
   @Post()
   async createVacancy(
     @Request() req,
-    @Body() vacancyData: { title: string; description?: string },
+    @Body()
+    vacancyData: {
+      title: string;
+      description?: string;
+      salary?: number | null;
+      workFormat?: string | null;
+      address?: string | null;
+      schedule?: string | null;
+      employmentType?: string | null;
+    },
   ) {
     const token = req.headers.authorization?.split(' ')[1];
     const user = await this.userService.validateToken(token); // Используем UserService для валидации токена
+
     if (!user || user.role !== 'EMPLOYER') {
       throw new UnauthorizedException(
         'Недостаточно прав для создания вакансии',
       );
     }
+
     return this.vacancyService.createVacancy(Number(user.id), vacancyData);
   }
-
   // Получение вакансии по ID
   @Get(':id')
   async getVacancy(@Param('id') id: number) {

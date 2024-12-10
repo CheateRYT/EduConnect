@@ -2,7 +2,6 @@ import {
   Body,
   Controller,
   Get,
-  Param,
   Post,
   Request,
   UnauthorizedException,
@@ -19,8 +18,9 @@ export class UserController {
     @Body('password') password: string,
     @Body('name') name: string,
     @Body('role') role: string,
+    @Body('company') company?: string,
   ) {
-    return this.userService.register(login, password, name, role);
+    return this.userService.register(login, password, name, role, company);
   }
   @Post('recommendation')
   async createRecommendation(
@@ -65,6 +65,7 @@ export class UserController {
       password?: string;
       profilePicture?: string;
       bio?: string;
+      company?: string;
     },
     @Body('currentPassword') currentPassword?: string,
   ) {
@@ -87,20 +88,20 @@ export class UserController {
     return { user: updatedUser };
   }
 
-  @Get('/:id')
-  async getUser(@Param('id') id: number, @Request() req) {
-    const token = req.headers.authorization?.split(' ')[1]; // Извлекаем токен из заголовка
-    const user = await this.userService.validateToken(token); // Проверяем токен
-    if (!user) {
-      throw new UnauthorizedException('Неверный токен'); // Если токен недействителен, выбрасываем исключение
-    }
+  // @Get('/:id')
+  // async getUser(@Param('id') id: number, @Request() req) {
+  //   const token = req.headers.authorization?.split(' ')[1]; // Извлекаем токен из заголовка
+  //   const user = await this.userService.validateToken(token); // Проверяем токен
+  //   if (!user) {
+  //     throw new UnauthorizedException('Неверный токен'); // Если токен недействителен, выбрасываем исключение
+  //   }
 
-    const foundUser = await this.userService.getUser(Number(id));
-    if (!foundUser) {
-      throw new Error('Не найден пользователь');
-    }
-    return { user: foundUser };
-  }
+  //   const foundUser = await this.userService.getUser(Number(id));
+  //   if (!foundUser) {
+  //     throw new Error('Не найден пользователь');
+  //   }
+  //   return { user: foundUser };
+  // }
 
   @Get('/')
   async getUsers(@Request() req) {

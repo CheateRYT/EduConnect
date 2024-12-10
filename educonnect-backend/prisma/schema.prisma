@@ -15,6 +15,7 @@ model User {
   login                   String           @unique
   password                String
   profilePicture          String?
+  company                 String?
   bio                     String?
   courses                 Course[]         @relation("UserCourses")
   projects                Project[]        @relation("UserProjects")
@@ -55,6 +56,12 @@ model Vacancy {
   updatedAt   DateTime @updatedAt
   employerId  Int
   employer    User     @relation("UserVacancies", fields: [employerId], references: [id])
+
+  salary         Float? // Зарплата (необязательный пункт)
+  workFormat     String? // Формат работы (например, "Удаленная", "Офисная", "Гибридная")
+  address        String? // Адрес (необязательный пункт)
+  schedule       String? // График работы (например, "Полный рабочий день", "Частичная занятость")
+  employmentType String? // Тип занятости (например, "Долгосрочный", "Временный", "Проектный")
 }
 
 model Recommendation {

@@ -62,6 +62,7 @@ export class UserService {
     password: string,
     name: string,
     role: string,
+    company?: string,
   ): Promise<User> {
     const hashedPassword = await argon2.hash(password);
     const newUser = await this.prisma.user.create({
@@ -71,6 +72,7 @@ export class UserService {
         password: hashedPassword,
         token: '',
         role,
+        company,
       },
     });
     return newUser;
@@ -170,6 +172,7 @@ export class UserService {
       password?: string;
       profilePicture?: string;
       bio?: string;
+      company?: string;
     },
     currentPassword?: string,
   ): Promise<User | null> {
@@ -221,7 +224,9 @@ export class UserService {
 
   async validateToken(token: string): Promise<User | null> {
     try {
+      console.log('validating');
       const decoded: any = jwt.verify(token, process.env.JWT_SECRET);
+      console.log(decoded.id);
       return this.prisma.user.findUnique({ where: { id: decoded.id } });
     } catch (error) {
       console.log(error);

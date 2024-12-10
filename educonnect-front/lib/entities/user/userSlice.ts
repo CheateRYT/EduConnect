@@ -49,7 +49,13 @@ const initialState: UserState = {
 // Регистрация пользователя
 export const registerUser = createAsyncThunk<
 	User,
-	{ login: string; password: string; name: string; role: string }
+	{
+		login: string
+		password: string
+		name: string
+		role: string
+		company?: string
+	}
 >('user/register', async userData => {
 	const response = await axios.post(`${backendApiUrl}/user/register`, userData)
 	return response.data

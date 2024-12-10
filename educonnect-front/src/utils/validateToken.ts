@@ -1,6 +1,5 @@
 import axios from 'axios'
 import { backendApiUrl } from './backendApiUrl'
-
 export const validateToken = async (token: string) => {
 	try {
 		const response = await axios.get(`${backendApiUrl}/user/validate-token`, {

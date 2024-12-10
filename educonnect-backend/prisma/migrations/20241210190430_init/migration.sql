@@ -7,6 +7,7 @@ CREATE TABLE "User" (
     "login" TEXT NOT NULL,
     "password" TEXT NOT NULL,
     "profilePicture" TEXT,
+    "company" TEXT,
     "bio" TEXT
 );
 
@@ -38,7 +39,6 @@ CREATE TABLE "Vacancy" (
     "title" TEXT NOT NULL,
     "description" TEXT,
     "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" DATETIME NOT NULL,
     "employerId" INTEGER NOT NULL,
     CONSTRAINT "Vacancy_employerId_fkey" FOREIGN KEY ("employerId") REFERENCES "User" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
 );

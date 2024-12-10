@@ -11,16 +11,28 @@ export class VacancyService {
     return this.prisma.vacancy.findMany();
   }
 
-  // Создание новой вакансии
   async createVacancy(
     employerId: number,
-    vacancyData: { title: string; description?: string },
+    vacancyData: {
+      title: string;
+      description?: string;
+      salary?: number | null;
+      workFormat?: string | null;
+      address?: string | null;
+      schedule?: string | null;
+      employmentType?: string | null;
+    },
   ): Promise<Vacancy> {
     return this.prisma.vacancy.create({
       data: {
         title: vacancyData.title,
         description: vacancyData.description,
         employerId: employerId,
+        salary: vacancyData.salary,
+        workFormat: vacancyData.workFormat,
+        address: vacancyData.address,
+        schedule: vacancyData.schedule,
+        employmentType: vacancyData.employmentType,
       },
     });
   }

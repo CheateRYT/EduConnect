@@ -12,12 +12,13 @@ const RegisterEmployer: React.FC = () => {
 	const [login, setLogin] = useState('')
 	const [password, setPassword] = useState('')
 	const [name, setName] = useState('')
+	const [company, setCompany] = useState('')
 	const [error, setError] = useState<string | null>(null)
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault()
 		const resultAction = await dispatch(
-			registerUser({ login, password, name, role: 'EMPLOYER' })
+			registerUser({ login, password, name, role: 'EMPLOYER', company })
 		)
 		if (registerUser.fulfilled.match(resultAction)) {
 			router.push('/login')
@@ -60,6 +61,17 @@ const RegisterEmployer: React.FC = () => {
 						value={name}
 						onChange={e => {
 							setName(e.target.value)
+							setError(null)
+						}}
+						required
+					/>
+					<input
+						type='text'
+						placeholder='Компания'
+						className={`${styles.input} ${error ? styles.error : ''}`}
+						value={company}
+						onChange={e => {
+							setCompany(e.target.value)
 							setError(null)
 						}}
 						required
