@@ -4,9 +4,9 @@ import { useRouter } from 'next/navigation'
 import React, { useState } from 'react'
 import { registerUser } from '../../../lib/entities/user/userSlice'
 import { useAppDispatch } from '../../../lib/store'
-import styles from './RegisterSudent.module.css'
+import styles from './RegisterTeacher.module.css'
 
-const RegisterStudent: React.FC = () => {
+const RegisterTeacher: React.FC = () => {
 	const dispatch = useAppDispatch()
 	const router = useRouter()
 	const [login, setLogin] = useState('')
@@ -17,7 +17,7 @@ const RegisterStudent: React.FC = () => {
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault()
 		const resultAction = await dispatch(
-			registerUser({ login, password, name, role: 'STUDENT' })
+			registerUser({ login, password, name, role: 'TEACHER' })
 		)
 		if (registerUser.fulfilled.match(resultAction)) {
 			router.push('/login')
@@ -29,7 +29,7 @@ const RegisterStudent: React.FC = () => {
 	return (
 		<div className={styles.container}>
 			<div className={styles.formContainer}>
-				<h1 className={styles.title}>Регистрация как студент </h1>
+				<h1 className={styles.title}>Регистрация как преподователь</h1>
 				<form className={styles.form} onSubmit={handleSubmit}>
 					<input
 						type='text'
@@ -86,4 +86,4 @@ const RegisterStudent: React.FC = () => {
 	)
 }
 
-export default RegisterStudent
+export default RegisterTeacher

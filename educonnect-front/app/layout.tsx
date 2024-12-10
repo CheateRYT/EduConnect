@@ -1,5 +1,6 @@
 import localFont from 'next/font/local'
 import './globals.css'
+import StoreProvider from './StoreProvider'
 
 const defaultFont = localFont({
 	src: './fonts/Dusha V5 Regular.ttf',
@@ -14,7 +15,11 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang='en'>
-			<body className={`${defaultFont.variable} antialiased`}>{children}</body>
+			<StoreProvider>
+				<body className={`${defaultFont.variable} antialiased`}>
+					{children}
+				</body>
+			</StoreProvider>
 		</html>
 	)
 }

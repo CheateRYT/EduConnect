@@ -1,5 +1,8 @@
 'use client'
+
+import RegisterStudent from '@/src/pages/RegisterStudent/RegisterStudent'
+
 const Page = () => {
-	return <div>Page</div>
+	return <RegisterStudent />
 }
 export default Page

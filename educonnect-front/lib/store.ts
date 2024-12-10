@@ -1,10 +1,10 @@
 // lib/store.ts
 import { configureStore } from '@reduxjs/toolkit'
-
+import userReducer from './entities/user/userSlice'
 // Создание Redux Store
 export const makeStore = () => {
 	return configureStore({
-		reducer: {},
+		reducer: { user: userReducer },
 	})
 }
 
