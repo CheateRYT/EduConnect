@@ -1,0 +1,92 @@
+.modalOverlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: rgba(0, 0, 0, 0.7); /* Более темный фон для лучшего контраста */
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.modalContent {
+	background: white;
+	padding: 30px; /* Увеличим отступы для большего пространства */
+	border-radius: 10px; /* Закругленные углы */
+	width: 400px;
+	box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Более выраженная тень */
+	animation: fadeIn 0.3s; /* Анимация появления */
+}
+
+.modalTitle {
+	color: #007bff; /* Цвет заголовка */
+	margin-bottom: 20px;
+	font-size: 1.8rem; /* Увеличенный размер шрифта */
+	text-align: center; /* Выравнивание по центру */
+}
+
+.label {
+	color: black;
+	font-weight: bold; /* Жирный шрифт для меток */
+}
+
+.modalInput,
+.modalSelect,
+.modalTextarea {
+	width: 100%;
+	padding: 12px; /* Увеличенные отступы */
+	color: black;
+	margin-bottom: 15px; /* Увеличенные отступы между элементами */
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	transition: border-color 0.3s; /* Плавный переход для цвета границы */
+}
+
+.modalInput:focus,
+.modalSelect:focus,
+.modalTextarea:focus {
+	border-color: #007bff; /* Цвет границы при фокусе */
+	outline: none; /* Убираем стандартное выделение */
+}
+
+.modalButton {
+	background-color: #007bff;
+	color: white;
+	padding: 12px; /* Увеличенные отступы */
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	width: 100%; /* Кнопка на всю ширину */
+	transition: background-color 0.3s; /* Плавный переход для фона */
+}
+
+.modalButton:hover {
+	background-color: #0056b3; /* Темный оттенок при наведении */
+}
+
+.closeButton {
+	background-color: transparent; /* Прозрачный фон для кнопки закрытия */
+	color: #007bff; /* Цвет текста */
+	border: none;
+	cursor: pointer;
+	margin-top: 10px; /* Отступ сверху */
+	text-align: center; /* Выравнивание по центру */
+	width: 100%; /* Кнопка на всю ширину */
+	transition: color 0.3s; /* Плавный переход для цвета текста */
+}
+
+.closeButton:hover {
+	color: #0056b3; /* Темный оттенок при наведении */
+}
+
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+		transform: translateY(-20px); /* Эффект появления снизу */
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}

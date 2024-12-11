@@ -33,7 +33,6 @@ export class UserController {
   ) {
     const token = req.headers.authorization?.split(' ')[1]; // Извлекаем токен из заголовка
     const user = await this.userService.validateToken(token); // Проверяем токен
-
     if (!user) {
       throw new UnauthorizedException('Неверный токен');
     }
@@ -45,16 +44,19 @@ export class UserController {
       );
     }
 
-    // Создаем рекомендацию
-    const recommendation = await this.userService.createRecommendation(
-      Number(user.id),
-      recipientId,
-      title,
-      description,
-      Number(rating),
-    );
-
-    return { recommendation };
+    try {
+      // Создаем рекомендацию
+      const recommendation = await this.userService.createRecommendation(
+        Number(user.id),
+        recipientId,
+        title,
+        description,
+        Number(rating),
+      );
+      return { recommendation };
+    } catch (error) {
+      throw new Error(`Ошибка при создании рекомендации: ${error.message}`);
+    }
   }
   @Post('update')
   async updateUser(
@@ -112,14 +114,21 @@ export class UserController {
   @Get('recommendations')
   async getRecommendations(@Request() req) {
     const token = req.headers.authorization?.split(' ')[1]; // Извлекаем токен из заголовка
+    console.log(token);
     const user = await this.userService.validateToken(token); // Проверяем токен
     if (!user) {
-      throw new UnauthorizedException('Неверный токен'); // Если токен недействителен, выбрасываем исключение
+      throw new UnauthorizedException(`Неверный токен ${token} `); // Если токен недействителен, выбрасываем исключение
     }
     const recommendations = await this.userService.getRecommendations(user.id); // Получаем рекомендации для пользователя
     return { recommendations }; // Возвращаем рекомендации
   }
-
+  @Get('recommendations/:id')
+  async getRecommendationsById(@Param('id') id: number) {
+    const recommendations = await this.userService.getRecommendations(
+      Number(id),
+    );
+    return { recommendations };
+  }
   @Get('/')
   async getUsers(@Request() req) {
     const token = req.headers.authorization?.split(' ')[1]; // Извлекаем токен из заголовка

@@ -121,7 +121,11 @@ export class UserService {
       where: { id: recipientId },
     });
 
-    if (!recipient || recipient.role !== 'STUDENT') {
+    if (!recipient) {
+      throw new Error('Получатель не найден');
+    }
+
+    if (recipient.role !== 'STUDENT') {
       throw new Error('Получатель должен быть студентом');
     }
 
@@ -135,7 +139,6 @@ export class UserService {
         recipientId,
       },
     });
-
     return recommendation;
   }
   async getUsers() {
@@ -229,6 +232,7 @@ export class UserService {
       return null;
     }
   }
+
   async getRecommendations(userId: number) {
     return this.prisma.recommendation.findMany({
       where: {

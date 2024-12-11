@@ -1,7 +1,7 @@
 'use client'
 import Header from '@/src/components/Header/Header'
 import { backendApiUrl } from '@/src/utils/backendApiUrl'
-import { getRecommendations, getUser } from '@/src/utils/validateToken'
+import { getUser } from '@/src/utils/validateToken'
 import axios from 'axios'
 import Cookies from 'js-cookie'
 import Image from 'next/image'
@@ -37,7 +37,6 @@ const Profile = () => {
 			setLoading(true) // Начинаем загрузку
 			const token = Cookies.get('token')
 			const fetchedUser = await getUserRequest() // Получаем пользователя
-
 			if (fetchedUser) {
 				setUser(fetchedUser) // Устанавливаем пользователя
 				if (token) {
@@ -49,14 +48,15 @@ const Profile = () => {
 							setIsMyProfile(false)
 						}
 					}
-
-					const recs = await getRecommendations(token)
-					setRecommendations(recs) // Устанавливаем рекомендации
 				}
+				// Получаем рекомендации для пользователя
+				const recsResponse = await axios.get(
+					`${backendApiUrl}/user/recommendations/${fetchedUser.id}`
+				)
+				setRecommendations(recsResponse.data.recommendations) // Устанавливаем рекомендации
 			}
 			setLoading(false) // Завершаем загрузку
 		}
-
 		fetchData()
 	}, [profileId]) // Зависимость только от profileId
 

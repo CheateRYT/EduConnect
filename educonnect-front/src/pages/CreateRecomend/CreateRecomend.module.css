@@ -1,0 +1,62 @@
+.listContainer {
+	min-height: 100vh; /* Минимальная высота равна высоте окна браузера */
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding: 40px 0;
+	background-color: white;
+}
+
+.title {
+	padding-top: 20px;
+	padding-bottom: 20px;
+	color: #007bff;
+	font-size: 2.5rem;
+	text-align: center;
+}
+.userName {
+	cursor: pointer;
+	text-decoration: underline;
+	font-size: 1.2rem;
+}
+.userBio {
+	font-size: 1rem;
+}
+.usersContainer {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+}
+
+.userCard {
+	width: 300px;
+	margin: 20px;
+	padding: 20px;
+	box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+	border-radius: 12px;
+	background-color: #fff;
+	color: black;
+	text-align: center;
+}
+
+.profilePicture {
+	border-radius: 50%; /* Закругляем изображение, чтобы оно выглядело как аватарка */
+	width: 80px; /* Уменьшаем размер изображения */
+	height: 80px; /* Уменьшаем размер изображения */
+	object-fit: cover; /* Обеспечиваем, чтобы изображение заполнило контейнер */
+	margin: 10px auto; /* Центрируем изображение */
+}
+
+.recommendationButton {
+	background-color: #007bff; /* Основной цвет */
+	color: white; /* Цвет текста */
+	padding: 10px 20px; /* Отступы */
+	border: none; /* Без границ */
+	border-radius: 6px; /* Закругленные углы */
+	cursor: pointer; /* Указатель курсора при наведении */
+	transition: background-color 0.3s; /* Плавный переход для фона */
+}
+
+.recommendationButton:hover {
+	background-color: #0056b3; /* Темный оттенок при наведении */
+}
