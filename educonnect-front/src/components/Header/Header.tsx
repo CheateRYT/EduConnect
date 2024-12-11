@@ -47,9 +47,12 @@ const Header = () => {
 				<Link href='/vacancies' className={styles.navLink}>
 					Вакансии
 				</Link>
-				<Link href='/portfolio' className={styles.navLink}>
-					Портфолио
-				</Link>
+				{user && (
+					<Link href={`/portfolio/${user.id}`} className={styles.navLink}>
+						Портфолио
+					</Link>
+				)}
+
 				{user && user.role == 'TEACHER' && (
 					<Link href='/create-recomend' className={styles.navLink}>
 						Рекомендации

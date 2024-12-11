@@ -4,6 +4,7 @@ import { backendApiUrl } from '@/src/utils/backendApiUrl'
 import axios from 'axios'
 import Cookies from 'js-cookie'
 import Image from 'next/image'
+import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import styles from './CreateRecomend.module.css'
@@ -60,6 +61,12 @@ const CreateRecomend = () => {
 								{user.name}
 							</h2>
 							<h3 className={styles.userBio}>{user.bio}</h3>
+							<Link
+								className={styles.portfolioLink}
+								href={`/portfolio/${user.id}`}
+							>
+								Портфолио
+							</Link>
 							<Image
 								src={user.profilePicture || '/default-image.webp'}
 								alt='Profile'

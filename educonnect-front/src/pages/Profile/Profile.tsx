@@ -5,6 +5,7 @@ import { getUser } from '@/src/utils/validateToken'
 import axios from 'axios'
 import Cookies from 'js-cookie'
 import Image from 'next/image'
+import Link from 'next/link'
 import { useParams, useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import styles from './Profile.module.css'
@@ -114,6 +115,9 @@ const Profile = () => {
 						height={150}
 					/>
 					<h2 className={styles.userName}>{user.name}</h2>
+					<Link className={styles.portfolioLink} href={`/portfolio/${user.id}`}>
+						Портфолио
+					</Link>
 					<p className={styles.userInfo}>Роль: {getRoleName(user.role)}</p>
 					{user.company && (
 						<p className={styles.userInfo}>Компания: {user.company}</p>

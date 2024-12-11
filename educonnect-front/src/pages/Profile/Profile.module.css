@@ -41,6 +41,11 @@
 	margin: 10px 0;
 }
 
+.portfolioLink {
+	text-decoration: underline;
+	cursor: pointer;
+	font-size: 1.5rem;
+}
 .userInfo {
 	font-size: 1.5rem;
 	margin: 5px 0;
