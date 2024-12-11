@@ -1,14 +1,14 @@
 // Header.tsx
 'use client'
-import { validateToken } from '@/src/utils/validateToken'
+import { getUser, validateToken } from '@/src/utils/validateToken'
 import Cookies from 'js-cookie'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import styles from './Header.module.css'
 const Header = () => {
 	const router = useRouter()
-
+	const [user, setUser] = useState<any>(null)
 	useEffect(() => {
 		const token = Cookies.get('token')
 		if (token) {
@@ -26,6 +26,12 @@ const Header = () => {
 		router.push('/')
 	}
 
+	useEffect(() => {
+		const token = Cookies.get('token')
+		if (token) {
+			getUser(token).then(setUser)
+		}
+	}, [])
 	return (
 		<header className={styles.header}>
 			<div onClick={handleClickLogo} className={styles.logo}>
@@ -44,9 +50,16 @@ const Header = () => {
 				<Link href='/portfolio' className={styles.navLink}>
 					Портфолио
 				</Link>
-				<Link href='/profile' className={styles.navLink}>
-					Профиль
-				</Link>
+				{user && user.role == 'TEACHER' && (
+					<Link href='/create-recomend' className={styles.navLink}>
+						Рекомендации
+					</Link>
+				)}
+				{user && (
+					<Link href={`/profile/${user.id}`} className={styles.navLink}>
+						Профиль
+					</Link>
+				)}
 			</nav>
 		</header>
 	)

@@ -116,12 +116,15 @@ export default function ProjectPage() {
 							<h1 className={styles.projectTitle}>{project.title}</h1>
 							<p className={styles.projectDescription}>{project.description}</p>
 							<p className={styles.projectCreator}>
-								Создано: {project.creator.name} на{' '}
+								Создано: {project.creator.name} в{' '}
 								{new Date(project.createdAt).toLocaleDateString()}
 							</p>
 						</div>
 						<div className={styles.projectFooter}>
-							{project.creator.id !== loggedInUserId && !isUserInProject ? (
+							{project.isCompleted == false &&
+							project.creator.id !== loggedInUserId &&
+							!isUserInProject &&
+							loggedInUserId.role !== 'EMPLOYER' ? (
 								<button
 									className={styles.joinButton}
 									onClick={handleJoinProject}
@@ -130,12 +133,16 @@ export default function ProjectPage() {
 								</button>
 							) : (
 								<>
-									<button
-										className={styles.actionButton}
-										onClick={() => setIsModalOpen(true)}
-									>
-										Создать действие
-									</button>
+									{' '}
+									{project.isCompleted == false &&
+										loggedInUserId.role !== 'EMPLOYER' && (
+											<button
+												className={styles.actionButton}
+												onClick={() => setIsModalOpen(true)}
+											>
+												Создать действие
+											</button>
+										)}
 									<CreateProjectActionModal
 										isOpen={isModalOpen}
 										onClose={() => setIsModalOpen(false)}

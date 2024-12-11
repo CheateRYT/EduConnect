@@ -1,0 +1,101 @@
+.profileContainer {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding: 40px 0;
+	background-color: white;
+	min-height: 100vh;
+}
+
+.profileTitle {
+	font-size: 2.5rem;
+	color: #007bff;
+	margin-bottom: 20px;
+	text-align: center;
+}
+
+.profileInfo {
+	text-align: center;
+	padding: 20px;
+	color: black;
+	border: 1px solid #ccc;
+	border-radius: 10px;
+	width: 100%;
+	max-width: 600px;
+	background-color: #fff;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.profilePicture {
+	width: 150px;
+	height: 150px;
+	border-radius: 50%;
+	margin-bottom: 20px;
+}
+
+.userName {
+	font-size: 2rem;
+	margin: 10px 0;
+}
+
+.userInfo {
+	font-size: 1.5rem;
+	margin: 5px 0;
+}
+
+.updateButton,
+.logoutButton {
+	background-color: #007bff;
+	color: white;
+	padding: 10px 20px;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	margin-top: 10px;
+	font-size: 1.2rem;
+}
+
+.updateButton:hover,
+.logoutButton:hover {
+	background-color: #0056b3;
+}
+
+.recommendationsContainer {
+	margin-top: 40px; /* Отступ сверху для контейнера рекомендаций */
+	width: 100%;
+	max-width: 600px; /* Максимальная ширина для контейнера рекомендаций */
+	padding: 20px;
+	background-color: #f9f9f9; /* Светлый фон для рекомендаций */
+	border-radius: 10px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.recommendationsTitle {
+	font-size: 2rem;
+	color: #007bff;
+	margin-bottom: 20px;
+	text-align: center;
+}
+
+.recommendationsList {
+	color: black;
+	list-style: none; /* Убираем маркеры списка */
+	padding: 0; /* Убираем внутренние отступы */
+}
+.notrecomends {
+	color: black;
+}
+.recomentTitle {
+	font-size: 1.3rem;
+}
+.recommendationItem {
+	margin-bottom: 15px; /* Отступ между рекомендациями */
+	padding: 10px;
+	color: black;
+	border: 1px solid #ccc; /* Рамка для каждой рекомендации */
+	border-radius: 5px; /* Закругленные углы */
+	background-color: #fff; /* Белый фон для каждой рекомендации */
+}

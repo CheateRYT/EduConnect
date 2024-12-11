@@ -173,15 +173,14 @@ export class UserService {
       profilePicture?: string;
       bio?: string;
       company?: string;
+      role?: string; // Добавляем роль
     },
     currentPassword?: string,
   ): Promise<User | null> {
     const user = await this.prisma.user.findUnique({ where: { id } });
-
     if (!user) {
       return null;
     }
-
     if (updates.password && currentPassword) {
       const passwordValid = await argon2.verify(user.password, currentPassword);
       if (!passwordValid) {
@@ -189,13 +188,11 @@ export class UserService {
       }
       updates.password = await argon2.hash(updates.password); // Хэшируем новый пароль
     }
-
     // Обновляем пользователя
     const updatedUser = await this.prisma.user.update({
       where: { id },
       data: updates,
     });
-
     return updatedUser;
   }
   async findUserByLogin(login: string): Promise<User | null> {
@@ -224,16 +221,24 @@ export class UserService {
 
   async validateToken(token: string): Promise<User | null> {
     try {
-      console.log('validating');
       const decoded: any = jwt.verify(token, process.env.JWT_SECRET);
-      console.log(decoded.id);
+
       return this.prisma.user.findUnique({ where: { id: decoded.id } });
     } catch (error) {
       console.log(error);
       return null;
     }
   }
-
+  async getRecommendations(userId: number) {
+    return this.prisma.recommendation.findMany({
+      where: {
+        recipientId: userId, // Предполагается, что рекомендации связаны с получателем
+      },
+    });
+  }
+  async getUserNew(id: number) {
+    return this.prisma.user.findFirst({ where: { id: id } }); // id уже число
+  }
   async getUserRoleByToken(token: string): Promise<string | null> {
     const user = await this.validateToken(token);
     return user ? user.role : null;

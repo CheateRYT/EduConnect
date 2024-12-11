@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Get,
+  Param,
   Post,
   Request,
   UnauthorizedException,
@@ -66,22 +67,20 @@ export class UserController {
       profilePicture?: string;
       bio?: string;
       company?: string;
+      role?: string; // Добавляем роль
     },
     @Body('currentPassword') currentPassword?: string,
   ) {
     const token = req.headers.authorization?.split(' ')[1]; // Извлекаем токен из заголовка
     const user = await this.userService.validateToken(token); // Проверяем токен
-
     if (!user) {
       throw new UnauthorizedException('Неверный токен');
     }
-
     const updatedUser = await this.userService.updateUser(
       user.id,
       updates,
       currentPassword,
     );
-
     if (!updatedUser) {
       throw new Error('Не найден пользователь');
     }
@@ -102,6 +101,24 @@ export class UserController {
   //   }
   //   return { user: foundUser };
   // }
+
+  @Get('getUser/:id')
+  async getUser(@Request() req, @Param('id') id: string) {
+    // Измените тип на string
+    const userId = parseInt(id, 10); // Преобразуем id в число
+    const user = await this.userService.getUserNew(userId); // Получаем пользователя
+    return { user: user }; // Возвращаем пользователя
+  }
+  @Get('recommendations')
+  async getRecommendations(@Request() req) {
+    const token = req.headers.authorization?.split(' ')[1]; // Извлекаем токен из заголовка
+    const user = await this.userService.validateToken(token); // Проверяем токен
+    if (!user) {
+      throw new UnauthorizedException('Неверный токен'); // Если токен недействителен, выбрасываем исключение
+    }
+    const recommendations = await this.userService.getRecommendations(user.id); // Получаем рекомендации для пользователя
+    return { recommendations }; // Возвращаем рекомендации
+  }
 
   @Get('/')
   async getUsers(@Request() req) {
