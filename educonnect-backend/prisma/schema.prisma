@@ -24,6 +24,7 @@ model User {
   createdProjects         Project[]        @relation("ProjectCreator")
   givenRecommendations    Recommendation[] @relation("GiverRecommendations") // Связь с рекомендациями, которые пользователь дал
   receivedRecommendations Recommendation[] @relation("RecipientRecommendations") // Связь с рекомендациями, которые пользователь получил
+  projectActions          ProjectAction[]  @relation("UserProjectActions") // Add this line for the relation to ProjectAction
 }
 
 model Course {
@@ -35,28 +36,53 @@ model Course {
   users       User[]   @relation("UserCourses")
   creatorId   Int
   creator     User     @relation("CourseCreator", fields: [creatorId], references: [id])
+  lessons     Lesson[] @relation("CourseLessons") // New relation to Lesson
+}
+
+model Lesson {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String?
+  createdAt   DateTime @default(now())
+  videoUrl    String?
+  courseId    Int
+  course      Course   @relation("CourseLessons", fields: [courseId], references: [id])
 }
 
 model Project {
-  id          Int      @id @default(autoincrement())
-  title       String
-  description String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  users       User[]   @relation("UserProjects")
-  creatorId   Int
-  creator     User     @relation("ProjectCreator", fields: [creatorId], references: [id])
+  id              Int             @id @default(autoincrement())
+  title           String
+  description     String?
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+  users           User[]          @relation("UserProjects")
+  creatorId       Int
+  creator         User            @relation("ProjectCreator", fields: [creatorId], references: [id])
+  maxParticipants Int // Maximum number of participants
+  isCompleted     Boolean         @default(false) // Indicates if the project is completed
+  actions         ProjectAction[] @relation("ProjectActions") // Relation to actions taken on the project
+}
+
+model ProjectAction {
+  id            Int      @id @default(autoincrement())
+  title         String
+  description   String?
+  repositoryUrl String?
+  createdAt     DateTime @default(now())
+  projectId     Int
+  project       Project  @relation("ProjectActions", fields: [projectId], references: [id])
+  userId        Int
+  user          User     @relation("UserProjectActions", fields: [userId], references: [id]) // Updated relation field
 }
 
 model Vacancy {
-  id          Int      @id @default(autoincrement())
-  title       String
-  description String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  employerId  Int
-  employer    User     @relation("UserVacancies", fields: [employerId], references: [id])
-
+  id             Int      @id @default(autoincrement())
+  title          String
+  description    String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  employerId     Int
+  employer       User     @relation("UserVacancies", fields: [employerId], references: [id])
   salary         Float? // Зарплата (необязательный пункт)
   workFormat     String? // Формат работы (например, "Удаленная", "Офисная", "Гибридная")
   address        String? // Адрес (необязательный пункт)

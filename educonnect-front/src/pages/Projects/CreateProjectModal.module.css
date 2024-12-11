@@ -1,0 +1,56 @@
+.modal {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 1000; /* Ensure the modal is above other content */
+}
+.modalContent {
+	background-color: #fff; /* White background for the modal */
+	padding: 20px;
+	border-radius: 12px;
+	box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2); /* Soft shadow for depth */
+	width: 90%; /* Responsive width */
+	max-width: 500px; /* Maximum width */
+}
+.modalTitle {
+	color: #007bff; /* Title color matching your theme */
+	margin-bottom: 20px;
+}
+.modalInput,
+.modalTextarea {
+	color: black;
+	width: 100%; /* Full width for inputs */
+	padding: 10px; /* Padding for comfort */
+	margin-bottom: 15px; /* Space between inputs */
+	border: 1px solid #ccc; /* Light border */
+	border-radius: 6px; /* Rounded corners */
+}
+.modalInput:focus,
+.modalTextarea:focus {
+	border-color: #007bff; /* Highlight border on focus */
+	outline: none; /* Remove default outline */
+}
+.modalButton {
+	background-color: #007bff; /* Button color matching your theme */
+	color: white; /* White text */
+	padding: 10px 15px; /* Padding for buttons */
+	border: none; /* No border */
+	border-radius: 6px; /* Rounded corners */
+	cursor: pointer; /* Pointer cursor on hover */
+	transition: background-color 0.3s; /* Smooth transition */
+}
+.modalButton:hover {
+	background-color: #0056b3; /* Darker shade on hover */
+}
+.modalCloseButton {
+	background-color: #ccc; /* Gray color for close button */
+}
+.modalCloseButton:hover {
+	background-color: #999; /* Darker gray on hover */
+}

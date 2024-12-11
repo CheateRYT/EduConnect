@@ -1,0 +1,96 @@
+.listContainer {
+	min-height: 100vh; /* Minimum height equal to the browser window height */
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding: 40px 0;
+	background-color: white;
+}
+
+.title {
+	padding-top: 20px;
+	padding-bottom: 20px;
+	color: #007bff;
+	font-size: 2.5rem;
+	text-align: center;
+}
+
+.projectItem {
+	width: 80%;
+	max-width: 900px;
+	margin-bottom: 40px;
+	padding: 30px;
+	box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+	border-radius: 12px;
+	background-color: #fff;
+}
+
+.projectDescription {
+	font-size: 20px;
+	line-height: 1.6;
+	margin-bottom: 15px;
+	color: #666;
+}
+
+.projectMeta {
+	font-size: 20px;
+	color: #999;
+}
+
+.createProjectButton {
+	background-color: #007bff; /* Primary color */
+	color: white; /* Text color */
+	padding: 10px 20px; /* Top/bottom and left/right padding */
+	border: none; /* No border */
+	border-radius: 6px; /* Rounded corners */
+	font-size: 16px; /* Font size */
+	cursor: pointer; /* Pointer cursor on hover */
+	transition: background-color 0.3s, transform 0.2s; /* Smooth transition for background color and scale */
+	margin-bottom: 20px; /* Space below the button */
+}
+
+.createProjectButton:hover {
+	background-color: #0056b3; /* Darker shade on hover */
+	transform: scale(1.05); /* Slightly enlarge button on hover */
+}
+
+.completeProjectButton {
+	margin-top: 20px;
+	background-color: #28a745; /* Bootstrap success color */
+	color: white; /* Text color */
+	padding: 5px 10px; /* Padding */
+	border: none; /* No border */
+	border-radius: 4px; /* Rounded corners */
+	font-size: 14px; /* Font size */
+	cursor: pointer; /* Pointer cursor on hover */
+	margin-right: 10px; /* Space between buttons */
+}
+
+.completeProjectButton:hover {
+	background-color: #218838; /* Darker shade on hover */
+}
+
+.deleteProjectButton {
+	margin-top: 20px;
+	background-color: #dc3545; /* Bootstrap danger color */
+	color: white; /* Text color */
+	padding: 5px 10px; /* Padding */
+	border: none; /* No border */
+	border-radius: 4px; /* Rounded corners */
+	font-size: 14px; /* Font size */
+	cursor: pointer; /* Pointer cursor on hover */
+}
+
+.deleteProjectButton:hover {
+	background-color: #c82333; /* Darker shade on hover */
+}
+
+.link {
+	text-decoration: none;
+	font-size: 22px;
+	color: #007bff;
+}
+
+.link:hover {
+	text-decoration: underline;
+}

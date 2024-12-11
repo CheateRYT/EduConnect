@@ -89,4 +89,65 @@ export class CourseController {
 
     return this.courseService.deleteCourse(id);
   }
+
+  // Create a new lesson
+  @Post(':courseId/lesson')
+  async createLesson(
+    @Request() req,
+    @Param('courseId') courseId: number,
+    @Body()
+    lessonData: { title: string; description?: string; videoUrl?: string },
+  ) {
+    const token = req.headers.authorization?.split(' ')[1];
+    const user = await this.userService.validateToken(token);
+    if (!user || user.role !== 'TEACHER') {
+      throw new UnauthorizedException('Недостаточно прав для создания урока');
+    }
+    return this.courseService.createLesson(courseId, lessonData);
+  }
+
+  // Get all lessons for a course
+  @Get(':courseId/lesson')
+  async getLessons(@Param('courseId') courseId: number) {
+    return this.courseService.getLessonsByCourseId(courseId);
+  }
+
+  // Get a lesson by ID
+  @Get(':courseId/lesson/:id')
+  async getLesson(@Param('id') id: number) {
+    const lesson = await this.courseService.getLessonById(id);
+    if (!lesson) {
+      throw new Error('Урок не найден');
+    }
+    return lesson;
+  }
+
+  // Update a lesson
+  @Put(':courseId/lesson/:id')
+  async updateLesson(
+    @Request() req,
+    @Param('id') id: number,
+    @Body()
+    lessonData: { title?: string; description?: string; videoUrl?: string },
+  ) {
+    const token = req.headers.authorization?.split(' ')[1];
+    const user = await this.userService.validateToken(token);
+    if (!user) {
+      throw new UnauthorizedException('Неверный токен');
+    }
+    // Here you could add additional checks if necessary
+    return this.courseService.updateLesson(id, lessonData);
+  }
+
+  // Delete a lesson
+  @Delete(':courseId/lesson/:id')
+  async deleteLesson(@Request() req, @Param('id') id: number) {
+    const token = req.headers.authorization?.split(' ')[1];
+    const user = await this.userService.validateToken(token);
+    if (!user) {
+      throw new UnauthorizedException('Неверный токен');
+    }
+    // Here you could add additional checks if necessary
+    return this.courseService.deleteLesson(id);
+  }
 }

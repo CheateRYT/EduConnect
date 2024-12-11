@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Course } from '@prisma/client'; // Импортируйте модель Course из Prisma
+import { Course, Lesson } from '@prisma/client'; // Импортируйте модель Course из Prisma
 import { PrismaService } from 'prisma/prisma.service';
 
 @Injectable()
@@ -24,6 +24,7 @@ export class CourseService {
       },
     });
   }
+
   // course.service.ts
   async getCourseCreatorId(id: number): Promise<number | null> {
     const course = await this.prisma.course.findUnique({
@@ -53,6 +54,53 @@ export class CourseService {
   // Удаление курса
   async deleteCourse(id: number): Promise<Course> {
     return this.prisma.course.delete({
+      where: { id },
+    });
+  }
+
+  // Create a new lesson
+  async createLesson(
+    courseId: number,
+    lessonData: { title: string; description?: string; videoUrl?: string },
+  ): Promise<Lesson> {
+    return this.prisma.lesson.create({
+      data: {
+        title: lessonData.title,
+        description: lessonData.description,
+        videoUrl: lessonData.videoUrl,
+        courseId: courseId,
+      },
+    });
+  }
+
+  // Get all lessons for a course
+  async getLessonsByCourseId(courseId: number): Promise<Lesson[]> {
+    return this.prisma.lesson.findMany({
+      where: { courseId: courseId },
+    });
+  }
+
+  // Get a lesson by ID
+  async getLessonById(id: number): Promise<Lesson | null> {
+    return this.prisma.lesson.findUnique({
+      where: { id },
+    });
+  }
+
+  // Update a lesson
+  async updateLesson(
+    id: number,
+    lessonData: { title?: string; description?: string; videoUrl?: string },
+  ): Promise<Lesson> {
+    return this.prisma.lesson.update({
+      where: { id },
+      data: lessonData,
+    });
+  }
+
+  // Delete a lesson
+  async deleteLesson(id: number): Promise<Lesson> {
+    return this.prisma.lesson.delete({
       where: { id },
     });
   }
