@@ -11,11 +11,31 @@ export class ProjectService {
     return this.prisma.project.findMany({
       include: {
         creator: true,
-        actions: true,
+
+        actions: {
+          include: {
+            user: true, // Включаем информацию о пользователе, который добавил действие
+          },
+        },
       },
     });
   }
-
+  // project.service.ts
+  async joinProject(projectId: number, userId: number): Promise<Project> {
+    return this.prisma.project.update({
+      where: { id: Number(projectId) },
+      data: {
+        users: {
+          connect: { id: userId },
+        },
+      },
+      include: {
+        creator: true,
+        actions: true,
+        users: true, // Включаем пользователей, чтобы вернуть обновленный список
+      },
+    });
+  }
   // Create a new project
   async createProject(
     creatorId: number,
@@ -41,6 +61,7 @@ export class ProjectService {
       where: { id },
       include: {
         creator: true,
+        users: true,
         actions: true, // Include actions related to the project
       },
     });
@@ -64,7 +85,7 @@ export class ProjectService {
   // Delete a project
   async deleteProject(id: number): Promise<Project> {
     return this.prisma.project.delete({
-      where: { id },
+      where: { id: Number(id) },
     });
   }
 
@@ -80,7 +101,7 @@ export class ProjectService {
   // Mark project as completed
   async completeProject(id: number): Promise<Project> {
     return this.prisma.project.update({
-      where: { id },
+      where: { id: Number(id) },
       data: { isCompleted: true },
     });
   }
@@ -96,7 +117,7 @@ export class ProjectService {
         title: actionData.title,
         description: actionData.description,
         repositoryUrl: actionData.repositoryUrl,
-        projectId: projectId,
+        projectId: Number(projectId),
         userId: userId,
       },
     });

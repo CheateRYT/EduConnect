@@ -24,7 +24,15 @@ export class ProjectController {
   async getProjects() {
     return this.projectService.getProjects();
   }
-
+  @Post(':projectId/join')
+  async joinProject(@Request() req, @Param('projectId') projectId: number) {
+    const token = req.headers.authorization?.split(' ')[1];
+    const user = await this.userService.validateToken(token);
+    if (!user) {
+      throw new UnauthorizedException('Invalid token');
+    }
+    return this.projectService.joinProject(projectId, Number(user.id));
+  }
   // Create a new project
   @Post()
   async createProject(

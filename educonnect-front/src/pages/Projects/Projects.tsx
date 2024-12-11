@@ -24,7 +24,7 @@ export default function ProjectsPage() {
 	const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
 	const [userId, setUserId] = useState<number | null>(null)
 	const [isTeacherOrEmployer, setIsTeacherOrEmployer] = useState<boolean>(false)
-
+	const token = Cookies.get('token')
 	async function fetchProjects() {
 		try {
 			const response = await axios.get<Project[]>(`${backendApiUrl}/project`)
@@ -56,7 +56,11 @@ export default function ProjectsPage() {
 
 	const handleDeleteProject = async (id: number) => {
 		try {
-			await axios.delete(`${backendApiUrl}/project/${id}`)
+			await axios.delete(`${backendApiUrl}/project/${id}`, {
+				headers: {
+					Authorization: `Bearer ${token}`,
+				},
+			})
 			fetchProjects() // Refresh the list after deletion
 		} catch (error) {
 			console.error('Error deleting project:', error)
@@ -65,7 +69,15 @@ export default function ProjectsPage() {
 
 	const handleCompleteProject = async (id: number) => {
 		try {
-			await axios.put(`${backendApiUrl}/project/${id}/complete`)
+			await axios.put(
+				`${backendApiUrl}/project/${id}/complete`,
+				{},
+				{
+					headers: {
+						Authorization: `Bearer ${token}`,
+					},
+				}
+			)
 			fetchProjects() // Refresh the list after completion
 		} catch (error) {
 			console.error('Error completing project:', error)

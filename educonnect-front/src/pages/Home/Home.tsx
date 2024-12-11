@@ -1,11 +1,11 @@
 'use client'
 
-import Header from '@/src/components/Header/Header'
+import ProjectsPage from '../Projects/Projects'
 
 const Home = () => {
 	return (
 		<div>
-			<Header />
+			<ProjectsPage />
 		</div>
 	)
 }
